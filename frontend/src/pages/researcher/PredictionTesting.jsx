@@ -22,14 +22,36 @@ const researcherNavItems = [
 ]
 
 export default function ResearcherPredictionTesting() {
-  const [selectedImage, setSelectedImage] = useState('/assets/images/tiger_detection.png')
+  const [selectedImage, setSelectedImage] = useState('')
+  const [selectedFile, setSelectedFile] = useState(null)
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
 
+  const handleFileChange = (event) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    setSelectedFile(file)
+    setSelectedImage(URL.createObjectURL(file))
+  }
+
   const handleTest = async () => {
+    if (!selectedFile) {
+      setResult({
+        animalName: 'No image selected',
+        confidence: 0,
+        modelUsed: 'WildLumina-YOLOv8x-v2.1',
+        processingTimeMs: 0,
+        bbox: { x1: 0, y1: 0, x2: 0, y2: 0 },
+      })
+      return
+    }
+
     setLoading(true)
     try {
-      const data = await runPredictionTest(null)
+      const formData = new FormData()
+      formData.append('file', selectedFile)
+      const data = await runPredictionTest(formData)
       setResult(data)
     } finally {
       setLoading(false)
@@ -57,17 +79,31 @@ export default function ResearcherPredictionTesting() {
               <Divider sx={{ mb: 2 }} />
 
               <Box sx={{ borderRadius: 2, overflow: 'hidden', bgcolor: '#000', height: 260, display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
-                <Box component="img" src={selectedImage} alt="Test Sample" sx={{ maxWidth: '100%', maxHeight: 260, objectFit: 'contain' }} />
+                {selectedImage ? (
+                  <Box component="img" src={selectedImage} alt="Test Sample" sx={{ maxWidth: '100%', maxHeight: 260, objectFit: 'contain' }} />
+                ) : (
+                  <Typography color="text.secondary">Upload a wildlife image to run prediction</Typography>
+                )}
               </Box>
 
-              <Box sx={{ display: 'flex', gap: 2 }}>
+              <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column' }}>
+                <Button
+                  variant="outlined"
+                  component="label"
+                  startIcon={<UploadFile />}
+                  sx={{ py: 1.2, fontWeight: 700 }}
+                >
+                  Choose Image
+                  <input hidden accept="image/*" type="file" onChange={handleFileChange} />
+                </Button>
+
                 <Button
                   variant="contained"
                   color="primary"
                   fullWidth
                   startIcon={<PlayArrow />}
                   onClick={handleTest}
-                  disabled={loading}
+                  disabled={loading || !selectedFile}
                   sx={{ py: 1.2, fontWeight: 700 }}
                 >
                   {loading ? <CircularProgress size={24} color="inherit" /> : 'Run YOLO Inference Test'}

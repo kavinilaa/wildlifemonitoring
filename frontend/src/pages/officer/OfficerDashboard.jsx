@@ -5,7 +5,7 @@ import {
 } from '@mui/material'
 import {
   PhotoLibrary, Visibility, NotificationsActive, Pets, WatchLater,
-  CheckCircle, Refresh, ArrowForward
+  CheckCircle, Refresh, ArrowForward, CloudUpload
 } from '@mui/icons-material'
 import DashboardLayout from '../../layouts/DashboardLayout'
 import StatCard from '../../components/StatCard'
@@ -20,6 +20,7 @@ import { motion } from 'framer-motion'
 const officerNavItems = [
   { label: 'Dashboard', path: '/officer/dashboard', icon: <PhotoLibrary fontSize="small" /> },
   { label: 'AI Monitoring', path: '/officer/monitoring', icon: <Visibility fontSize="small" /> },
+  { label: 'AI Image Upload', path: '/ai-monitoring', icon: <CloudUpload fontSize="small" /> },
   { label: 'Detection History', path: '/officer/history', icon: <Pets fontSize="small" /> },
   { label: 'Alerts', path: '/officer/alerts', icon: <NotificationsActive fontSize="small" /> },
   { label: 'Reports', path: '/officer/reports', icon: <WatchLater fontSize="small" /> },
@@ -61,8 +62,8 @@ export default function OfficerDashboard() {
   }
 
   const {
-    imagesProcessedToday, detectionsToday, activeAlerts, rareSpeciesDetections,
-    monitoringStatus, latestDetection, recentDetections
+    imagesProcessedToday = 0, detectionsToday = 0, activeAlerts = 0, rareSpeciesDetections = 0,
+    monitoringStatus = 'ACTIVE', latestDetection, recentDetections
   } = data || {}
 
   return (
@@ -91,7 +92,7 @@ export default function OfficerDashboard() {
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <StatCard
             title="Processed Today"
-            value={imagesProcessedToday ?? 142}
+            value={imagesProcessedToday}
             icon={<PhotoLibrary />}
             color="#2E7D32"
             subtitle="Folder: incoming_images"
@@ -100,7 +101,7 @@ export default function OfficerDashboard() {
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <StatCard
             title="Detections Today"
-            value={detectionsToday ?? 89}
+            value={detectionsToday}
             icon={<Pets />}
             color="#4CAF50"
             subtitle="Animals Identified"
@@ -109,7 +110,7 @@ export default function OfficerDashboard() {
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <StatCard
             title="Active Alerts"
-            value={activeAlerts ?? 2}
+            value={activeAlerts}
             icon={<NotificationsActive />}
             color="#D32F2F"
             subtitle="Requires Action"
@@ -118,19 +119,19 @@ export default function OfficerDashboard() {
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <StatCard
             title="Rare Species"
-            value={rareSpeciesDetections ?? 4}
+            value={rareSpeciesDetections}
             icon={<Visibility />}
             color="#7B68EE"
-            subtitle="Tigers & Leopards"
+            subtitle="Rare species"
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
           <StatCard
             title="Latest Animal"
-            value={latestDetection?.animalName || 'Tiger'}
+            value={latestDetection?.animalName || '—'}
             icon={<CheckCircle />}
             color="#F57C00"
-            subtitle={`${((latestDetection?.confidence || 0.96) * 100).toFixed(0)}% Confidence`}
+            subtitle={latestDetection?.confidence ? `${(latestDetection.confidence * 100).toFixed(0)}% Confidence` : 'No recent detection'}
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2}>
@@ -139,7 +140,7 @@ export default function OfficerDashboard() {
             value={monitoringStatus || 'ACTIVE'}
             icon={<WatchLater />}
             color="#388E3C"
-            subtitle="Real-time Polling"
+            subtitle="Live updates"
           />
         </Grid>
       </Grid>
@@ -177,8 +178,8 @@ export default function OfficerDashboard() {
                 <CardMedia
                   component="img"
                   height="220"
-                  image={latestDetection.imageUrl || '/assets/images/tiger_detection.png'}
-                  alt={latestDetection.animalName}
+                  image={latestDetection.imageUrl || ''}
+                  alt={latestDetection.animalName || 'Latest wildlife detection'}
                   sx={{ objectFit: 'cover' }}
                 />
                 {latestDetection.bbox && (

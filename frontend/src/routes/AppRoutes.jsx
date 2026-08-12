@@ -34,6 +34,9 @@ import ResearcherAnalytics from '../pages/researcher/ResearchAnalytics'
 import ResearcherReports from '../pages/researcher/Reports'
 import ResearcherSettings from '../pages/researcher/Settings'
 
+// AI Monitoring Page
+import AIMonitoringPage from '../pages/ai/AIMonitoring'
+
 export default function AppRoutes() {
   const { user } = useAuth()
 
@@ -68,6 +71,9 @@ export default function AppRoutes() {
       <Route path="/officer/alerts" element={<ProtectedRoute allowedRole="FOREST_OFFICER"><Alerts /></ProtectedRoute>} />
       <Route path="/officer/reports" element={<ProtectedRoute allowedRole="FOREST_OFFICER"><OfficerReports /></ProtectedRoute>} />
       <Route path="/officer/settings" element={<ProtectedRoute allowedRole="FOREST_OFFICER"><OfficerSettings /></ProtectedRoute>} />
+
+      {/* AI Monitoring Route */}
+      <Route path="/ai-monitoring" element={<ProtectedRoute allowedRole={['SYSTEM_ADMIN', 'FOREST_OFFICER', 'RESEARCHER']}><AIMonitoringPage /></ProtectedRoute>} />
 
       {/* RESEARCHER Routes */}
       <Route path="/researcher/dashboard" element={<ProtectedRoute allowedRole="RESEARCHER"><ResearcherDashboard /></ProtectedRoute>} />

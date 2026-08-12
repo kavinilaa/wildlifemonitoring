@@ -4,7 +4,7 @@ import {
 } from '@mui/material'
 import {
   Dashboard as DashIcon, People, Storage, Memory, MonitorHeart,
-  Timeline, Assessment, Settings, Refresh
+  Timeline, Assessment, Settings, Refresh, CloudUpload
 } from '@mui/icons-material'
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip as RechartsTooltip,
@@ -21,6 +21,7 @@ const adminNavItems = [
   { label: 'User Management', path: '/admin/users', icon: <People fontSize="small" /> },
   { label: 'Dataset Management', path: '/admin/datasets', icon: <Storage fontSize="small" /> },
   { label: 'AI Model Management', path: '/admin/models', icon: <Memory fontSize="small" /> },
+  { label: 'AI Image Upload', path: '/ai-monitoring', icon: <CloudUpload fontSize="small" /> },
   { label: 'System Monitoring', path: '/admin/monitoring', icon: <MonitorHeart fontSize="small" /> },
   { label: 'Analytics', path: '/admin/analytics', icon: <Timeline fontSize="small" /> },
   { label: 'Reports', path: '/admin/reports', icon: <Assessment fontSize="small" /> },

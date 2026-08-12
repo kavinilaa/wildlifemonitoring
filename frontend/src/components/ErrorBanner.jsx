@@ -1,7 +1,9 @@
 import { Alert, AlertTitle, Box, Button } from '@mui/material'
 import { WifiOff, Refresh } from '@mui/icons-material'
 
-export default function ErrorBanner({ title = 'Offline / Fallback Mode', message, onRetry }) {
+export default function ErrorBanner({ title = '', message = '', onRetry }) {
+  if (!title && !message) return null
+
   return (
     <Box sx={{ mb: 3 }}>
       <Alert
@@ -16,8 +18,8 @@ export default function ErrorBanner({ title = 'Offline / Fallback Mode', message
         }
         sx={{ borderRadius: 2 }}
       >
-        <AlertTitle sx={{ fontWeight: 700 }}>{title}</AlertTitle>
-        {message || 'Spring Boot API is operating in standalone demo mode. Live data and simulated monitoring are active.'}
+        <AlertTitle sx={{ fontWeight: 700 }}>{title || 'Connection issue'}</AlertTitle>
+        {message || 'Unable to load data from the backend.'}
       </Alert>
     </Box>
   )

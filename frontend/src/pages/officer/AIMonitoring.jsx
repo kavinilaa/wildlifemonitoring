@@ -5,7 +5,7 @@ import {
 } from '@mui/material'
 import {
   FolderSpecial, Memory, Refresh, CheckCircle, Speed, Warning,
-  Storage, Computer, ArrowRightAlt, PhotoLibrary, Visibility
+  Storage, Computer, ArrowRightAlt, PhotoLibrary, Visibility, CloudUpload
 } from '@mui/icons-material'
 import DashboardLayout from '../../layouts/DashboardLayout'
 import StatusIndicator from '../../components/StatusIndicator'
@@ -18,6 +18,7 @@ import { motion } from 'framer-motion'
 const officerNavItems = [
   { label: 'Dashboard', path: '/officer/dashboard', icon: <PhotoLibrary fontSize="small" /> },
   { label: 'AI Monitoring', path: '/officer/monitoring', icon: <Visibility fontSize="small" /> },
+  { label: 'AI Image Upload', path: '/ai-monitoring', icon: <CloudUpload fontSize="small" /> },
   { label: 'Detection History', path: '/officer/history', icon: <CheckCircle fontSize="small" /> },
   { label: 'Alerts', path: '/officer/alerts', icon: <Warning fontSize="small" /> },
   { label: 'Reports', path: '/officer/reports', icon: <Speed fontSize="small" /> },
@@ -76,12 +77,12 @@ export default function AIMonitoring() {
     aiModelStatus = 'LOADED',
     modelName = 'WildLumina-YOLOv8x-v2.1',
     incomingFolderPath = 'datasets/incoming_images/',
-    lastProcessedImage = 'IMG_20260810_084512_014.jpg',
-    lastDetectedAnimal = 'Bengal Tiger',
-    lastConfidence = 0.964,
-    lastDetectionTime = '2026-08-10T08:45:12Z',
-    imagesProcessedToday = 142,
-    detectionsToday = 89,
+    lastProcessedImage = '',
+    lastDetectedAnimal = '',
+    lastConfidence = 0,
+    lastDetectionTime = '',
+    imagesProcessedToday = 0,
+    detectionsToday = 0,
   } = status || {}
 
   return (
@@ -253,8 +254,8 @@ export default function AIMonitoring() {
                   <CardMedia
                     component="img"
                     height="140"
-                    image={latest?.imageUrl || '/assets/images/tiger_detection.png'}
-                    alt={lastDetectedAnimal}
+                    image={latest?.imageUrl || ''}
+                    alt={lastDetectedAnimal || 'Latest wildlife detection'}
                     sx={{ objectFit: 'cover' }}
                   />
                 </Box>
@@ -270,7 +271,7 @@ export default function AIMonitoring() {
                   <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', my: 1 }}>
                     <Typography variant="body2" color="text.secondary">Confidence:</Typography>
                     <Chip
-                      label={`${((lastConfidence || 0.964) * 100).toFixed(1)}%`}
+                      label={lastConfidence ? `${(lastConfidence * 100).toFixed(1)}%` : '—'}
                       color="success"
                       size="small"
                       sx={{ fontWeight: 700 }}

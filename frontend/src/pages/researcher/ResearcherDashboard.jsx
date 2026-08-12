@@ -4,7 +4,7 @@ import {
 } from '@mui/material'
 import {
   Dashboard as DashIcon, Storage, ModelTraining as TrainIcon, Assessment,
-  Biotech, Timeline, Description, Settings, Refresh
+  Biotech, Timeline, Description, Settings, Refresh, CloudUpload
 } from '@mui/icons-material'
 import {
   ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, Legend,
@@ -20,6 +20,7 @@ const researcherNavItems = [
   { label: 'Dataset Management', path: '/researcher/datasets', icon: <Storage fontSize="small" /> },
   { label: 'Model Training', path: '/researcher/training', icon: <TrainIcon fontSize="small" /> },
   { label: 'Model Evaluation', path: '/researcher/evaluation', icon: <Assessment fontSize="small" /> },
+  { label: 'AI Image Upload', path: '/ai-monitoring', icon: <CloudUpload fontSize="small" /> },
   { label: 'Prediction Testing', path: '/researcher/testing', icon: <Biotech fontSize="small" /> },
   { label: 'Research Analytics', path: '/researcher/analytics', icon: <Timeline fontSize="small" /> },
   { label: 'Reports', path: '/researcher/reports', icon: <Description fontSize="small" /> },

@@ -26,8 +26,14 @@ public class Detection {
 
     private String imagePath;
 
-    public Detection() {
-    }
+    // AI prediction fields
+    private String species;
+    private Double confidence;
+    private Double processingTime;
+    private String model;
+    private String detectionStatus;
+
+    public Detection() {}
 
     public Detection(String imageName, String detectionTime, String predictions, String imagePath) {
         this.imageName = imageName;
@@ -68,11 +74,21 @@ public class Detection {
         this.predictions = predictions;
     }
 
-    public String getImagePath() {
-        return imagePath;
-    }
+    public String getImagePath() { return imagePath; }
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
+    public String getSpecies() { return species; }
+    public void setSpecies(String species) { this.species = species; }
+
+    public Double getConfidence() { return confidence; }
+    public void setConfidence(Double confidence) { this.confidence = confidence; }
+
+    public Double getProcessingTime() { return processingTime; }
+    public void setProcessingTime(Double processingTime) { this.processingTime = processingTime; }
+
+    public String getModel() { return model; }
+    public void setModel(String model) { this.model = model; }
+
+    public String getDetectionStatus() { return detectionStatus; }
+    public void setDetectionStatus(String detectionStatus) { this.detectionStatus = detectionStatus; }
 }

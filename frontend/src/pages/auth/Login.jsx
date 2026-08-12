@@ -15,8 +15,8 @@ export default function Login() {
   const { login: authLogin } = useAuth()
 
   const [role, setRole] = useState('FOREST_OFFICER')
-  const [loginId, setLoginId] = useState('FO1001')
-  const [password, setPassword] = useState('password123')
+  const [loginId, setLoginId] = useState('')
+  const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')

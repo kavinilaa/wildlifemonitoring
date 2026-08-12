@@ -1,16 +1,17 @@
 package com.wildlumina.app.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.wildlumina.app.dto.LoginRequest;
 import com.wildlumina.app.dto.RegisterRequest;
 import com.wildlumina.app.dto.UserDto;
 import com.wildlumina.app.entity.User;
 import com.wildlumina.app.repository.UserRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -60,7 +61,7 @@ public class UserService {
     public UserDto login(LoginRequest request) {
         Optional<User> optionalUser = userRepository.findByLoginId(request.getLoginId());
         if (optionalUser.isEmpty()) {
-            throw new IllegalArgumentException("Invalid Login ID or password")
+            throw new IllegalArgumentException("Invalid Login ID or password");
         }
         User user = optionalUser.get();
         if (!user.getPassword().equals(request.getPassword())) {
